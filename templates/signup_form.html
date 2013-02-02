@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Kyle's CS254 Blog Signup</title>
+  </head>
+
+  <body>
+    <h2>Signup</h2>
+    <form method="post">
+      <label>
+      Username
+      <input type="text" name="username" value="{{vdata['username']}}">
+      </label>
+      <span style="color: red">{{vdata['e_username']}}</span>
+      <br>
+      
+      <label> 
+      Password 
+      <input type="password" name="password"> 
+      </label>
+      <span style="color: red">{{vdata['e_password']}}</span>
+	  <br>
+      
+      <label> 
+      Verify Password 
+      <input type="password" name="verify"> 
+      </label>
+      <span style="color: red">{{vdata['e_verify']}}</span>
+      <br>
+      
+      <label> 
+      Email (optional) 
+      <input type="text" name="email" value="{{vdata['email']}}"> 
+      </label>
+      <span style="color: red">{{vdata['e_email']}}</span>
+      <br>
+      
+      <input type="submit">
+    </form>
+  </body>
+
+</html>
