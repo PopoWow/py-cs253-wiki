@@ -39,5 +39,9 @@ class EditHandler(BaseHandler):
         else:
             new_rec = WikiPosts.register(path, content, self.user.key().id())
             new_rec.put()
-            self.redirect(path)
             
+#            host_url = self.request.host_url
+#            full_url = host_url + path
+#            self.response.headers.add_header('Location', full_url)
+#            self.response.set_status(302)
+            self.redirect(path, permanent=False)

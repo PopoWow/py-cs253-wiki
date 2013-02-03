@@ -29,8 +29,8 @@ class BaseApp(webapp2.WSGIApplication):
 def cleanpath(func):
     "Decorate get functions and clean the path"
     def get_cleaned(self, path):
-        if not path.endswith('/'):
-            path = path + '/'
+        if len(path) > 1 and path.endswith('/'):
+            path = path[:-1]
         return func(self, path)
     return get_cleaned
 

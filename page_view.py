@@ -39,6 +39,6 @@ class ViewHandler(BaseHandler):
                 self.error(404)
             else:
                 # if user not logged in, edit page handler will redirect to login.
-                # Do we want to have a double redirect???
+                # Do we want to have a double redixrect???
                 url = URL_RD_EDIT.format(path)
                 self.redirect(url)

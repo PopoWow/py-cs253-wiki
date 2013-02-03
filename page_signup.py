@@ -37,10 +37,6 @@ class SignupHandler(BaseHandler):
             vdata['e_password'] = "That wasn't a valid password."
             submit_error = True
             
-        if not utils.valid_email(email):
-            vdata['e_email'] = "That's not a valid email."
-            submit_error = True
-        
         if submit_error:
             self.render('signup_form.html', vdata=vdata)
         else:

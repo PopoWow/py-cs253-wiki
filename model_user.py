@@ -7,7 +7,7 @@ class BaseModel(db.Model):
 class Users(BaseModel):
     username = db.StringProperty(required = True)
     pw_hash = db.StringProperty(required = True)
-    email = db.StringProperty(required = True)
+    email = db.StringProperty()
     
     @staticmethod
     def users_key(group = 'default'):
