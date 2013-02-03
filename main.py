@@ -29,9 +29,9 @@ class MainHandler(BaseHandler):
 
 app = BaseApp([(URL_SIGNUP,     SignupHandler),
                (URL_LOGIN,      LoginHandler),
-               (URL_LOGOUT,     LogoutHandler),
-               (URL_EDIT,       EditHandler),
-               (URL_HIST,       HistoryHandler),
+               (URL_RE_LOGOUT,  LogoutHandler),
+               (URL_RE_HIST,    HistoryHandler),
+               (URL_RE_EDIT,    EditHandler),
                (URL_VIEW,       ViewHandler)                           
                ],
                debug=True)

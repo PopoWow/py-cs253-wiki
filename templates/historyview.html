@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block entry %}
+	{% for rec in vdata['queryresults'] %}
+		<br>
+		{{rec.render(True, vdata['usernames'][rec.user_id]) | safe}}
+		<br>
+		<a href="{{rec.path}}?v={{rec.key().id()}}">view</a>
+		<br>
+	{% endfor %}
+{% endblock %}

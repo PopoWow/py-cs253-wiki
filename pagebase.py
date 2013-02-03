@@ -3,7 +3,7 @@ import webapp2
 import jinja2
 import jinja_filters
 import utils
-from model_user import User
+from model_user import Users
 
 # I always like to insert a layer when using 3rd party code like this
 # allows for easy injection of my own stuff at a later time.  If you
@@ -17,6 +17,7 @@ from model_user import User
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
                                autoescape = True)
+jinja_filters.set_filters(jinja_env)
 
 def render_str(template, **params):
     t = jinja_env.get_template(template)
@@ -25,21 +26,32 @@ def render_str(template, **params):
 class BaseApp(webapp2.WSGIApplication):
     pass
 
+def cleanpath(func):
+    "Decorate get functions and clean the path"
+    def get_cleaned(self, path):
+        if not path.endswith('/'):
+            path = path + '/'
+        return func(self, path)
+    return get_cleaned
+
 class BaseHandler(webapp2.RequestHandler):
     # jinja helpers.
     # take map of parameters and get jinja to render a template
     def render_str(self, template, **params):
         params['user'] = self.user
-        render_str(template, params)
+        return render_str(template, **params)
+#        t = jinja_env.get_template(template)
+#        return t.render(params)
 
     # user-callable helper to call into jinja and pass result stream to webapp2
     def render(self, template, **kw):
-        self.response.out.write(self.render_str(template, **kw))
+        rendered = self.render_str(template, **kw)
+        self.write(rendered)
 
     # write out some stuff via webapp2
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)    
-    
+
     #
     def authenticate_user(self):
         # check the userid cookie and validate the user.
@@ -73,5 +85,6 @@ class BaseHandler(webapp2.RequestHandler):
     # called before each connection.  
     def initialize(self, *a, **kw):
         super(BaseHandler, self).initialize(*a, **kw)
+
         uid = self.read_secure_cookie('user_id')
-        self.user = User.by_id(int(uid))
+        self.user = Users.by_id(int(uid)) if uid else None 

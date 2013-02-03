@@ -2,10 +2,10 @@ import os
 
 from google.appengine.ext import db
 
-from pagebase import BaseApp, BaseHandler
+from pagebase import BaseApp, BaseHandler, cleanpath
 import utils
 from urls import *
-from model_user import User
+from model_user import Users
 
 
 class LoginHandler(BaseHandler): 
@@ -33,9 +33,8 @@ class LoginHandler(BaseHandler):
             self.render('login_form.html', vdata=vdata)
         else:
             # No form submit errors.  Query for the user
-            user_rec = User.by_username(username)
-
-            if user_rec and utils.valid_pw_hash(username, password, user_rec.pw_hash):
+            user_rec = Users.login(username, password)
+            if user_rec:
                 # found the username and the salt checked out!
                 self.login(user_rec)
                 self.redirect(URL_ROOT)
@@ -44,8 +43,9 @@ class LoginHandler(BaseHandler):
                 self.render('login_form.html', vdata=vdata)
 
 class LogoutHandler(BaseHandler):
-    def get(self):
+    @cleanpath
+    def get(self, path):
         self.logout()
-        self.redirect(URL_LOGIN)
+        self.redirect(path)
 
 

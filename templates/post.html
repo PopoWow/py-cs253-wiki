@@ -1,0 +1,11 @@
+<div class="post">
+  <div class="post-heading">
+    <div class="post-date">
+      {{username}} {{user.dt_created | created}}
+    </div>
+  </div>
+
+  <div class="post-content">
+    {{user._content_formatted | safe}}
+  </div>
+</div>

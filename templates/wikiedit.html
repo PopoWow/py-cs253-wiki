@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form method="post">
+	    <label for="content">Content</label>       
+		<br> 
+	    <textarea name="content">{{vdata['content']}}</textarea>
+	    <br>
+	    <div class="error">{{vdata['e_entry']}}</div>      
+	    <input type="submit" value="Save">
+	</form>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+
+{% block entry %}
+  {{vdata['post'].render(False, vdata['username']) | safe}}
+{% endblock %}

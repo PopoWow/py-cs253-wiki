@@ -5,7 +5,7 @@ from google.appengine.ext import db
 from pagebase import BaseApp, BaseHandler
 import utils
 from urls import *
-from model_user import User
+from model_user import Users
 
 class SignupHandler(BaseHandler):
     def get(self):
@@ -45,7 +45,7 @@ class SignupHandler(BaseHandler):
             self.render('signup_form.html', vdata=vdata)
         else:
             #form filled out successfully, check DB for dupes            
-            user_rec = User.by_username(username)
+            user_rec = Users.by_username(username)
             if user_rec:
                 # dupe!!!
                 vdata['e_username'] = "That user already exists."
@@ -53,7 +53,7 @@ class SignupHandler(BaseHandler):
             else:
                 # sign up form was successful.  Now, first create a password
                 # hash and create a Users entity.
-                new_user = User.register(username, password, email)
+                new_user = Users.register(username, password, email)
                 new_user.put()
                 
                 # now we want to store a cookie indicating a user.  send
